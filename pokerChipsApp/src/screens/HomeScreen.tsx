@@ -19,7 +19,12 @@ const { width } = Dimensions.get('window');
  * Displays an animated poker chip logo and a "Crear Mesa" button.
  * Uses React Native's built-in Animated API (no Reanimated dependency).
  */
-export default function HomeScreen() {
+interface HomeScreenProps {
+  onCreateTable: (players: number, stack: number) => void;
+  onJoinTable: (code: string) => void;
+}
+
+export default function HomeScreen({ onCreateTable, onJoinTable }: HomeScreenProps) {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [joinModalVisible, setJoinModalVisible] = useState(false);
   // Animation values using RN's built-in Animated
@@ -82,8 +87,7 @@ export default function HomeScreen() {
 
   const handleCreateTable = (players: number, stack: number) => {
     setCreateModalVisible(false);
-    // TODO: Navigate to table screen with config
-    console.log(`Mesa creada: ${players} jugadores, ${stack} fichas c/u`);
+    onCreateTable(players, stack);
   };
 
   const handleOpenJoinModal = () => {
@@ -96,8 +100,7 @@ export default function HomeScreen() {
 
   const handleJoinTable = (code: string) => {
     setJoinModalVisible(false);
-    // TODO: Connect to existing table with code
-    console.log(`Ingresando a mesa con código: ${code}`);
+    onJoinTable(code);
   };
 
   return (
